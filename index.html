@@ -131,6 +131,14 @@ button{
   box-shadow:0 50px 130px rgba(0,0,0,0.35);
 }
 
+/* ✅ ADDED: Celebration GIF styling (keeps it clean & centered) */
+.yesGif{
+  width:220px;
+  max-width:70vw;
+  display:block;
+  margin:0 auto 18px auto;
+}
+
 .big{
   font-size:32px;
   color:#e91e63;
@@ -220,9 +228,12 @@ for(let i=0;i<30;i++){
 
 <div class="overlay" id="overlay">
   <div class="celebrate">
-    <div class="big">You said YES 🤸‍♂️💕🙈💖</div>
+    <!-- ✅ ADDED: Your Tenor GIF (shows when YES is clicked) -->
+    <img class="yesGif" src="https://media.tenor.com/q_zo_A3taR0AAAAj/tkthao219-bubududu.gif" alt="BubuDudu celebration">
+
+    <div class="big">You said YES 🤸‍♂️💕💖</div>
     <p>
-      Vaishu… I’m trying to act normal right now,  
+      Vaish… I’m trying to act normal right now,   
       but my heart is literally doing cartwheels. 🤸‍♂️💕  
       This might be the cutest decision ever made. 🌸✨
     </p>
@@ -240,8 +251,8 @@ function startMusic(){ music.play().catch(()=>{}); }
 window.addEventListener("pointerdown",startMusic,{once:true});
 
 const lines=[
-"Are you sure Vaishu? 🥺",
-"My heart paused for a second 😭",
+"Are you sure Vaish? 🥺",
+    "My heart paused for a second 😭",
     "Think once more… gently 💕",
     "I promise I’ll cherish you 🌸",
     "I’ll protect your smile 😌",
@@ -262,17 +273,40 @@ const lines=[
     "I just want to make you smile 😌",
     "Vaishu… you matter deeply 💘",
     "I’ll value every moment 🌸",
-    "You feel like home 💖",
-];
+    "You feel like home 💖",];
 let count=0;
 
+/* ✅ ONLY CHANGE: safer moveNo() so button never goes out of screen (mobile-safe) */
 function moveNo(){
-const x=Math.random()*(window.innerWidth-140);
-const y=Math.random()*(window.innerHeight-60);
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
-bubble.style.left=(x+10)+"px";
-bubble.style.top=(y-70)+"px";
+  const margin = 12; // keep some safe spacing from edges
+
+  // Real button size (mobile-safe)
+  const bw = noBtn.offsetWidth || 140;
+  const bh = noBtn.offsetHeight || 60;
+
+  // Clamp area so the button stays fully visible
+  const maxX = Math.max(margin, window.innerWidth - bw - margin);
+  const maxY = Math.max(margin, window.innerHeight - bh - margin);
+
+  const x = margin + Math.random() * (maxX - margin);
+  const y = margin + Math.random() * (maxY - margin);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top  = y + "px";
+
+  // Keep bubble visible too
+  const bubbleW = bubble.offsetWidth || 280;
+  const bubbleH = bubble.offsetHeight || 70;
+
+  let bx = x + 10;
+  let by = y - 70;
+
+  // Clamp bubble within viewport
+  bx = Math.min(window.innerWidth - bubbleW - margin, Math.max(margin, bx));
+  by = Math.min(window.innerHeight - bubbleH - margin, Math.max(margin, by));
+
+  bubble.style.left = bx + "px";
+  bubble.style.top  = by + "px";
 }
 moveNo();
 
@@ -337,4 +371,3 @@ setTimeout(()=>e.remove(),1500);
 
 </body>
 </html>
-
