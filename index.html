@@ -276,37 +276,13 @@ const lines=[
     "You feel like home 💖",];
 let count=0;
 
-/* ✅ ONLY CHANGE: safer moveNo() so button never goes out of screen (mobile-safe) */
 function moveNo(){
-  const margin = 12; // keep some safe spacing from edges
-
-  // Real button size (mobile-safe)
-  const bw = noBtn.offsetWidth || 140;
-  const bh = noBtn.offsetHeight || 60;
-
-  // Clamp area so the button stays fully visible
-  const maxX = Math.max(margin, window.innerWidth - bw - margin);
-  const maxY = Math.max(margin, window.innerHeight - bh - margin);
-
-  const x = margin + Math.random() * (maxX - margin);
-  const y = margin + Math.random() * (maxY - margin);
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top  = y + "px";
-
-  // Keep bubble visible too
-  const bubbleW = bubble.offsetWidth || 280;
-  const bubbleH = bubble.offsetHeight || 70;
-
-  let bx = x + 10;
-  let by = y - 70;
-
-  // Clamp bubble within viewport
-  bx = Math.min(window.innerWidth - bubbleW - margin, Math.max(margin, bx));
-  by = Math.min(window.innerHeight - bubbleH - margin, Math.max(margin, by));
-
-  bubble.style.left = bx + "px";
-  bubble.style.top  = by + "px";
+const x=Math.random()*(window.innerWidth-140);
+const y=Math.random()*(window.innerHeight-60);
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+bubble.style.left=(x+10)+"px";
+bubble.style.top=(y-70)+"px";
 }
 moveNo();
 
