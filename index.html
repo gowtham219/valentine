@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>💘 Vaish 💘</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  overflow:hidden;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#ffe6f0,#fff6cc);
+  position:relative;
+}
+
+/* Floating Hearts */
+.heart{
+  position:absolute;
+  animation: floatUp linear infinite;
+  pointer-events:none;
+  opacity:0.7;
+}
+@keyframes floatUp{
+  from{ transform: translateY(110vh) rotate(0deg); opacity:0;}
+  10%{ opacity:1;}
+  to{ transform: translateY(-20vh) rotate(360deg); opacity:0;}
+}
+
+/* Card */
+.card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(255,255,255,0.95);
+  padding:50px 40px;
+  border-radius:40px;
+  text-align:center;
+  box-shadow:0 40px 120px rgba(255,77,136,0.25);
+  width:min(520px,92vw);
+  backdrop-filter:blur(10px);
+  z-index:2;
+}
+
+.title h1{
+  margin:0;
+  font-size:32px;
+  font-weight:600;
+  color:#d81b60;
+}
+
+.line{
+  width:60px;
+  height:3px;
+  background:linear-gradient(90deg,#ff4d88,#ff80ab);
+  margin:15px auto 25px auto;
+  border-radius:10px;
+}
+
+.question{
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  font-size:16px;
+  color:#555;
+  margin-bottom:30px;
+}
+
+button{
+  padding:14px 35px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+#yes{
+  background:linear-gradient(135deg,#ff4d88,#ff80ab);
+  color:white;
+  box-shadow:0 20px 50px rgba(255,77,136,0.35);
+}
+
+#yes:hover{
+  transform:scale(1.08);
+}
+
+/* NO Button */
+#no{
+  position:absolute;
+  background:#999;
+  color:white;
+  z-index:5;
+}
+
+/* Bubble */
+.bubble{
+  position:absolute;
+  background:white;
+  padding:12px 18px;
+  border-radius:20px;
+  color:#c2185b;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  font-size:15px;
+  max-width:280px;
+  display:none;
+  z-index:6;
+}
+
+/* Celebration */
+.overlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(255,230,240,0.6);
+  backdrop-filter:blur(8px);
+  z-index:10;
+}
+.overlay.show{display:flex;}
+
+.celebrate{
+  background:white;
+  padding:45px;
+  border-radius:45px;
+  text-align:center;
+  box-shadow:0 50px 130px rgba(0,0,0,0.35);
+}
+
+.big{
+  font-size:32px;
+  color:#e91e63;
+  margin-bottom:15px;
+}
+
+/* Confetti (FRONT) */
+.confetti{
+  position:absolute;
+  width:8px;
+  height:8px;
+  top:-10px;
+  border-radius:2px;
+  animation:fall linear forwards;
+  z-index:9998;
+}
+@keyframes fall{
+  to{ transform: translateY(110vh) rotate(720deg); opacity:0;}
+}
+
+/* Emoji Shower (FRONT & BIGGER) */
+.emojiRain{
+  position:absolute;
+  font-size:34px;
+  top:-20px;
+  animation:emojiFall linear forwards;
+  pointer-events:none;
+  z-index:9999;
+  text-shadow:0 10px 18px rgba(0,0,0,0.25);
+}
+@keyframes emojiFall{
+  to{ transform:translateY(110vh) rotate(360deg); opacity:0;}
+}
+
+/* Emoji Blast (FRONT & BIGGER) */
+.emojiBurst{
+  position:absolute;
+  font-size:40px;
+  pointer-events:none;
+  animation:burst 1.4s ease forwards;
+  z-index:9999;
+  text-shadow:0 10px 18px rgba(0,0,0,0.25);
+}
+@keyframes burst{
+  from{ transform:translate(0,0) scale(0.8); opacity:0;}
+  10%{opacity:1;}
+  to{ transform:translate(var(--dx),var(--dy)) scale(1.4); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<script>
+const emojis=["💖","💗","💘","💕","🌸"];
+for(let i=0;i<30;i++){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(6+Math.random()*8)+"s";
+  h.style.fontSize=(15+Math.random()*20)+"px";
+  document.body.appendChild(h);
+}
+</script>
+
+<div class="card">
+  <div class="title">
+    <h1>Vaish 💖</h1>
+    <div class="line"></div>
+  </div>
+
+  <div class="question">Will you be my Valentine? 💘</div>
+  <div class="subtitle">
+    Because every little thing feels brighter when it’s you.
+  </div>
+
+  <button id="yes">Yes 💖</button>
+</div>
+
+<button id="no">No 🙈</button>
+<div class="bubble" id="bubble"></div>
+
+<audio id="music" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<div class="overlay" id="overlay">
+  <div class="celebrate">
+    <div class="big">You said YES 🤸‍♂️💕🙈💖</div>
+    <p>
+      Vaishu… I’m trying to act normal right now,  
+      but my heart is literally doing cartwheels. 🤸‍♂️💕  
+      This might be the cutest decision ever made. 🌸✨
+    </p>
+  </div>
+</div>
+
+<script>
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const bubble=document.getElementById("bubble");
+const overlay=document.getElementById("overlay");
+const music=document.getElementById("music");
+
+function startMusic(){ music.play().catch(()=>{}); }
+window.addEventListener("pointerdown",startMusic,{once:true});
+
+const lines=[
+"Are you sure Vaish? 🥺",
+"My heart paused for a second 😭",
+"Think once more… gently 💕",
+"I promise I’ll cherish you 🌸",
+"I’ll protect your smile 😌",
+"I’ll make ordinary days special 💖",
+"You mean more than you know 💘",
+"Don’t break this hopeful heart 🥺"
+];
+let count=0;
+
+function moveNo(){
+const x=Math.random()*(window.innerWidth-140);
+const y=Math.random()*(window.innerHeight-60);
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+bubble.style.left=(x+10)+"px";
+bubble.style.top=(y-70)+"px";
+}
+moveNo();
+
+noBtn.addEventListener("click",()=>{
+bubble.style.display="block";
+bubble.innerHTML=lines[count%lines.length];
+count++;
+moveNo();
+startMusic();
+});
+
+yesBtn.addEventListener("click",()=>{
+overlay.classList.add("show");
+startMusic();
+confetti(350);
+emojiShower(120);
+emojiBlast(60);
+});
+
+function confetti(n){
+for(let i=0;i<n;i++){
+const c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"vw";
+c.style.background=`hsl(${Math.random()*360},90%,60%)`;
+c.style.animationDuration=(1+Math.random()*2)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),3000);
+}
+}
+
+function emojiShower(n){
+const shower=["💖","💘","💕","💗","🌸","✨","🥰","😍","💞","💓"];
+for(let i=0;i<n;i++){
+const e=document.createElement("div");
+e.className="emojiRain";
+e.innerHTML=shower[Math.floor(Math.random()*shower.length)];
+e.style.left=Math.random()*100+"vw";
+e.style.animationDuration=(2+Math.random()*2)+"s";
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),4000);
+}
+}
+
+function emojiBlast(n){
+const blast=["💖","💘","💕","💗","🌸","✨","🥰","😍","💞"];
+const cx=window.innerWidth/2;
+const cy=window.innerHeight/2;
+for(let i=0;i<n;i++){
+const e=document.createElement("div");
+e.className="emojiBurst";
+e.innerHTML=blast[Math.floor(Math.random()*blast.length)];
+e.style.left=cx+"px";
+e.style.top=cy+"px";
+e.style.setProperty("--dx",(Math.random()*600-300)+"px");
+e.style.setProperty("--dy",(Math.random()*500-250)+"px");
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),1500);
+}
+}
+</script>
+
+</body>
+</html>
